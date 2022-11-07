@@ -1,5 +1,6 @@
 import doctest
 
+
 class Agent:
 
     def __init__(self, values: list):
@@ -8,21 +9,26 @@ class Agent:
     def value(self, option: int) -> float:
         return self.values[option]
 
-x = Agent([1,2,3,4,5])
-y = Agent([3,1,2,5,4])
-z = Agent([3,5,5,1,1])
 
-AgentList = [x,y,z]
+"""
+initialize the agents from the example.
+"""
+Ami = Agent([1, 2, 3, 4, 5])
+Tami = Agent([3, 1, 2, 5, 4])
+Rami = Agent([3, 5, 5, 1, 1])
+
+agents = [Ami, Tami, Rami]
+
 
 def isParetoImprovement(agents: list, option1: int, option2: int) -> bool:
     """
-    >>> isParetoImprovement(AgentList, 2,1)
+    >>> isParetoImprovement(agents, 2,1)
     True
-    >>> isParetoImprovement(AgentList, 1,2)
+    >>> isParetoImprovement(agents, 1,2)
     False
     """
     for agent in agents:
-        # print(f"{agent.value(option1)}, {agent.value(option2)}")
+        # check if option 1 is better than option 2 for each player.
         if agent.value(option1) < agent.value(option2):
             return False
     return True
@@ -30,14 +36,16 @@ def isParetoImprovement(agents: list, option1: int, option2: int) -> bool:
 
 def isParetoOptimal(agents: list, option: int, allOptions: list):
     """
-    >>> isParetoOptimal(AgentList, 0, [1,2,3,4])
+    >>> isParetoOptimal(agents, 0, [1,2,3,4])
     True
-    >>> isParetoOptimal(AgentList, 1, [0,2,3,4])
+    >>> isParetoOptimal(agents, 1, [0,2,3,4])
     False
     """
     for opt in allOptions:
+        # check for each option if it's better than all the options that are given. 
         if isParetoImprovement(agents, opt, option) and opt != option:
             return False
     return True
+
 
 doctest.testmod()
